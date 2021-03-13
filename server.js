@@ -26,10 +26,7 @@ app.get('/testimonials/random', (req, res) => {
 });
 
 app.get('/testimonials/:id', (req, res) => {
-  const index = req.params.id;
-  const indexNew = index.slice(1);
-  res.json(db[indexNew - 1]);
-  // res.json(db.filter(item => item.id === req.params.id));
+  res.json(db.find(item => item.id == req.params.id));
 });
 
 app.post('/testimonials', (req, res) => {
@@ -42,18 +39,29 @@ app.post('/testimonials', (req, res) => {
   res.json(confirmation);
 });
 
-app.put('testimonilals/:id', (req, res) => {
+app.put('/testimonials/:id', (req, res) => {
   const updatedItem = ({
     id: req.params.id,
     author: req.body.author,
     text: req.body.text,
   });
-  const itemToUptade = db.find(item => item.id === req.params.id);
-  const index = db.indexOf(itemToUptade);
+  const itemToUpdate = db.find(item => item.id == req.params.id);
+  const index = db.indexOf(itemToUpdate);
   db[index] = updatedItem;
   res.json(confirmation);
 });
 
-app.listen(8080, () => {
-  console.log('Server is running on port: 8080');
+app.delete('/testimonials/:id', (req, res) => {
+  const deletedItem = db.find(item => item.id == req.params.id);
+  const index = db.indexOf(deletedItem);
+  db.splice(index, 1);
+  res.json(confirmation);
+});
+
+app.use((req, res) => {
+  res.status(404).json({ message: 'Not found...' });
+});
+
+app.listen(8000, () => {
+  console.log('Server is running on port: 8000');
 });
