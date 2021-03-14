@@ -3,6 +3,8 @@ const router = express.Router();
 var uniqid = require('uniqid');
 const db = require('../db.js');
 
+const confirmation = { message: 'OK'};
+
 router.route('/testimonials').get((req, res) => {
   res.json(db.testimonials);
 });
@@ -46,6 +48,5 @@ router.route('/testimonials/:id').delete((req, res) => {
   db.testimonials.splice(index, 1);
   res.json(confirmation);
 });
-
 
 module.exports = router;
