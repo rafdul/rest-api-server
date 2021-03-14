@@ -35,16 +35,14 @@ router.route('/concerts/:id').put((req, res) => {
     day: req.body.day,
     image: req.body.image,
   });
-  const itemToUpdate = db.concerts.find(item => item.id == req.params.id);
-  const index = db.concerts.indexOf(itemToUpdate);
-  db.concerts[index] = updatedItem;
+  const itemToUpdate = db.concerts.findIndex(item => item.id == req.params.id);
+  db.concerts[itemToUpdate] = updatedItem;
   res.json(confirmation);
 });
 
 router.route('/concerts/:id').delete((req, res) => {
-  const deletedItem = db.concerts.find(item => item.id == req.params.id);
-  const index = db.concerts.indexOf(deletedItem);
-  db.concerts.splice(index, 1);
+  const deletedItem = db.concerts.findIndex(item => item.id == req.params.id);
+  db.concerts.splice(deletedItem, 1);
   res.json(confirmation);
 });
 

@@ -36,16 +36,14 @@ router.route('/testimonials/:id').put((req, res) => {
     author: req.body.author,
     text: req.body.text,
   });
-  const itemToUpdate = db.testimonials.find(item => item.id == req.params.id);
-  const index = db.testimonials.indexOf(itemToUpdate);
-  db.testimonials[index] = updatedItem;
+  const itemToUpdate = db.testimonials.findIndex(item => item.id == req.params.id);
+  db.testimonials[itemToUpdate] = updatedItem;
   res.json(confirmation);
 });
 
 router.route('/testimonials/:id').delete((req, res) => {
-  const deletedItem = db.testimonials.find(item => item.id == req.params.id);
-  const index = db.testimonials.indexOf(deletedItem);
-  db.testimonials.splice(index, 1);
+  const deletedItem = db.testimonials.findIndex(item => item.id == req.params.id);
+  db.testimonials.splice(deletedItem, 1);
   res.json(confirmation);
 });
 

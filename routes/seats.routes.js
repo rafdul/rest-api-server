@@ -38,16 +38,14 @@ router.route('/seats/:id').put((req, res) => {
     client: req.body.client,
     email: req.body.email,
   });
-  const itemToUpdate = db.seats.find(item => item.id == req.params.id);
-  const index = db.seats.indexOf(itemToUpdate);
-  db.seats[index] = updatedItem;
+  const itemToUpdate = db.seats.findIndex(item => item.id == req.params.id);
+  db.seats[itemToUpdate] = updatedItem;
   res.json(confirmation);
 });
 
 router.route('/seats/:id').delete((req, res) => {
-  const deletedItem = db.seats.find(item => item.id == req.params.id);
-  const index = db.seats.indexOf(deletedItem);
-  db.seats.splice(index, 1);
+  const deletedItem = db.seats.findIndex(item => item.id == req.params.id);
+  db.seats.splice(deletedItem, 1);
   res.json(confirmation);
 });
 
