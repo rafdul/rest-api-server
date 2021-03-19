@@ -1,4 +1,5 @@
 const express = require('express');
+// const socket = require('socket.io');
 const router = express.Router();
 var uniqid = require('uniqid');
 const db = require('../db.js');
@@ -26,6 +27,7 @@ router.route('/seats').post((req, res) => {
     res.json({ message: "The slot is already taken..." });
   } else {
     db.seats.push(newBooking);
+    req.io.emit('seatsUpdated', db.seats);
     res.json(confirmation);
   }
 });
