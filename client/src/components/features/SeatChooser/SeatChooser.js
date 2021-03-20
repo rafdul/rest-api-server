@@ -5,18 +5,25 @@ import io from 'socket.io-client';
 import './SeatChooser.scss';
 
 class SeatChooser extends React.Component {
+
+  // state = {
+  //   numberTickets: [],
+  // };  
   
   componentDidMount() {
     const { loadSeats, loadSeatsData } = this.props;
     // this.socket = io.connect('http://localhost:8000' || process.env.NODE_ENV);
     this.socket = io.connect((process.env.NODE_ENV === 'production') ? '/' : 'http://localhost:8000');
     // this.socket = io.connect('http://localhost:8000');
+    // this.socket.on('startNumberTickets', tickets => this.setState( {numberTickets: [tickets]} ));
     this.socket.on('seatsUpdated', seats => loadSeatsData(seats));
+    // this.socket.on('numberOfTickets', tickets => this.setState( {numberTickets: [tickets]} ));
     loadSeats();
   }
 
   isTaken = (seatId) => {
     const { seats, chosenDay } = this.props;
+
 
     return (seats.some(item => (item.seat === seatId && item.day === chosenDay)));
   }
@@ -33,7 +40,7 @@ class SeatChooser extends React.Component {
   render() {
 
     const { prepareSeat } = this;
-    const { requests } = this.props;
+    const { requests, seats, chosenDay } = this.props;
 
     return (
       <div>
@@ -43,6 +50,8 @@ class SeatChooser extends React.Component {
         { (requests['LOAD_SEATS'] && requests['LOAD_SEATS'].success) && <div className="seats">{[...Array(50)].map((x, i) => prepareSeat(i+1) )}</div>}
         { (requests['LOAD_SEATS'] && requests['LOAD_SEATS'].pending) && <Progress animated color="primary" value={50} /> }
         { (requests['LOAD_SEATS'] && requests['LOAD_SEATS'].error) && <Alert color="warning">Couldn't load seats...</Alert> }
+        {/* <h3>Free seats: {50 - this.state.numberTickets[0]} / 50</h3> */}
+        <h3>Free seats: {50 - seats.filter(item => item.day === chosenDay).length} / 50</h3>
       </div>
     )
   };

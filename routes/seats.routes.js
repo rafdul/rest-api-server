@@ -28,6 +28,7 @@ router.route('/seats').post((req, res) => {
   } else {
     db.seats.push(newBooking);
     req.io.emit('seatsUpdated', db.seats);
+    // req.io.emit('numberOfTickets', db.seats.length);
     res.json(confirmation);
   }
 });
