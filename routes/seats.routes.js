@@ -1,17 +1,41 @@
 const express = require('express');
-// const socket = require('socket.io');
 const router = express.Router();
-var uniqid = require('uniqid');
-const db = require('../db.js');
+// var uniqid = require('uniqid');
+// const db = require('../db.js');
+const Seat = require('../models/seat.model');
 
 const confirmation = { message: 'OK'};
 
-router.route('/seats').get((req, res) =>{
-  res.json(db.seats);
+router.get('/seats', async (req, res) => {
+  try {
+    res.json(await Seat.find());
+  }
+  catch(err) {
+    res.status(500).json({ message: err });
+  }
 });
 
-router.route('/seats/:id').get((req, res) =>{
-  res.json(db.seats.find(item => item.id == req.params.id));
+router.get('/seats/:id', async (req, res) => {
+  try {
+    const tes = await Seat.findById(req.params.id);
+    if(!tes) res.status(404).json({ message: 'Not found' });
+    else res.json(tes);
+  }
+  catch(err) {
+    res.status(500).json({ message: err });
+  }
+});
+
+router.post('/seats', async (req, res) => {
+  try {
+    const { day, seat, client, email } = req.body;
+    const newSeat = new Seat({ day: day, seat: seat, client: client, email: email });
+    await newSeat.save();
+    res.json(confirmation);
+  }
+  catch(err) {
+    res.status(500).json({ message: err });
+  }
 });
 
 router.route('/seats').post((req, res) => {
@@ -33,6 +57,8 @@ router.route('/seats').post((req, res) => {
   }
 });
 
+
+
 router.route('/seats/:id').put((req, res) => {
   const updatedItem = ({
     id: req.params.id,
@@ -46,10 +72,19 @@ router.route('/seats/:id').put((req, res) => {
   res.json(confirmation);
 });
 
-router.route('/seats/:id').delete((req, res) => {
-  const deletedItem = db.seats.findIndex(item => item.id == req.params.id);
-  db.seats.splice(deletedItem, 1);
-  res.json(confirmation);
+
+router.delete('/seats/:id', async (req, res) => {
+  try {
+    const tes = await(Seat.findById(req.params.id));
+    if(tes) {
+      await Seat.deleteOne({ _id: req.params.id });
+      res.json(confirmation);
+    }
+    else res.status(404).json({ message: 'Not found...' });
+  }
+  catch(err) {
+    res.status(500).json({ message: err });
+  }
 });
 
 module.exports = router;
