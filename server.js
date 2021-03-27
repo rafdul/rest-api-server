@@ -2,11 +2,10 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const socket = require('socket.io');
+const mongoose = require('mongoose');
 const routerTestimonial = require('./routes/testimonials.routes');
 const routerConcerts = require('./routes/concerts.routes');
 const routerSeats = require('./routes/seats.routes');
-const db = require('./db');
-const mongoose = require('mongoose');
 
 const app = express();
 
@@ -49,5 +48,4 @@ const io = socket(server, { cors: { origin: '*' } });
 io.on('connection', socket => {
   console.log('New socket - its id: ', socket.id);
   // socket.emit('startNumberTickets', db.seats.length)
-  console.log('db.seats.length z serwera', db.seats.length)
 });
