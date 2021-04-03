@@ -66,10 +66,6 @@ exports.getPrice = async (req, res) => {
     }
     if(concertsPrice.length < 1) res.status(404).json({ message: 'Not found' });
     else res.json(concertsPrice);
-
-    // const price = await Concert.find({price: req.params.price >= priceMin && req.params.price <= priceMax});
-    // if(!price) res.status(404).json({ message: 'Not found' });
-    // else res.json(price);
   }
   catch(err) {
     res.status(500).json({ message: err });
