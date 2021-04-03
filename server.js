@@ -30,8 +30,12 @@ app.use((req, res) => {
   res.status(404).json({ message: 'Not found...' });
 });
 
-mongoose.connect('mongodb+srv://rafal:kodilla@cluster0.wr8zn.mongodb.net/bookingDB?retryWrites=true&w=majority', { useNewUrlParser: true });
+mongoose.connect('mongodb+srv://rafal:kodilla@cluster0.wr8zn.mongodb.net/bookingDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
+
+// const dbURI = process.env.NODE_ENV === 'production' ? 'mongodb+srv://rafal:kodilla@cluster0.wr8zn.mongodb.net/bookingDB?retryWrites=true&w=majority' : 'url to local db';
+// mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
+// const db = mongoose.connection;
 
 db.once('open', () => {
   console.log('Connected to the database');
@@ -49,3 +53,5 @@ io.on('connection', socket => {
   console.log('New socket - its id: ', socket.id);
   // socket.emit('startNumberTickets', db.seats.length)
 });
+
+module.exports = server;
