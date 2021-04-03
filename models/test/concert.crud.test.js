@@ -23,10 +23,10 @@ describe('Concert', () => {
   describe('Reading data', () => {
 
     beforeEach(async () => {
-      const testOne = new Concert({performer: 'band1', genre: 'rock1', price: 1, day: 1, image: 'photo1'});
+      const testOne = new Concert({performer: 'band1', genre: 'rock1', price: 1, day: 1, image: '/img/uploads/350327.jpg'});
       await testOne.save();
   
-      const testTwo = new Concert({performer: 'band2', genre: 'rock2', price: 22, day: 2, image: 'photo2'});
+      const testTwo = new Concert({performer: 'band2', genre: 'rock2', price: 22, day: 2, image: '/img/uploads/811838.jpg'});
       await testTwo.save();
     });
 
@@ -51,7 +51,7 @@ describe('Concert', () => {
   describe('Creating data', () => {
 
     it('should insert new document with "insertOne" method', async () => {
-      const concert = new Concert({performer: 'band3', genre: 'rock3', price: 33, day: 3, image: 'photo3'});
+      const concert = new Concert({performer: 'band3', genre: 'rock3', price: 33, day: 3, image: '/img/uploads/350327.jpg'});
       await concert.save();
       const result = await Concert.findOne({ performer: 'band3' });
       expect(result).to.exist;
@@ -65,10 +65,10 @@ describe('Concert', () => {
   describe('Updating data', () => {
 
     beforeEach(async () => {
-      const testOne = new Concert({performer: 'band1', genre: 'rock1', price: 11, day: 1, image: 'photo1'});
+      const testOne = new Concert({performer: 'band1', genre: 'rock1', price: 11, day: 1, image: '/img/uploads/167483.jpg'});
       await testOne.save();
   
-      const testTwo = new Concert({performer: 'band2', genre: 'rock2', price: 22, day: 2, image: 'photo2'});
+      const testTwo = new Concert({performer: 'band2', genre: 'rock2', price: 22, day: 2, image: '/img/uploads/3018077.jpg'});
       await testTwo.save();
     });
 
@@ -100,10 +100,10 @@ describe('Concert', () => {
   describe('Removing data', () => {
 
     beforeEach(async () => {
-      const testOne = new Concert({performer: 'band1', genre: 'rock1', price: 11, day: 1, image: 'photo1'});
+      const testOne = new Concert({performer: 'band1', genre: 'rock1', price: 11, day: 1, image: '/img/uploads/3018077.jpg'});
       await testOne.save();
   
-      const testTwo = new Concert({performer: 'band2', genre: 'rock2', price: 22, day: 2, image: 'photo2'});
+      const testTwo = new Concert({performer: 'band2', genre: 'rock2', price: 22, day: 2, image: '/img/uploads/811838.jpg'});
       await testTwo.save();
     });
 

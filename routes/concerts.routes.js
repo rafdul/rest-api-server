@@ -2,17 +2,17 @@ const express = require('express');
 const router = express.Router();
 const ConcertsController = require('../controllers/concerts.controller');
 
-router.get('/concerts', ConcertsController.getAll);
+router.get('/concerts', ConcertsController.getConcertAll);
 
-router.get('/concerts/:id', ConcertsController.getId);
+router.get('/concerts/:id', ConcertsController.getConcertById);
 
-router.get('/concerts/performer/:performer', ConcertsController.getPerformer);
+router.get('/concerts/performer/:performer', ConcertsController.getConcertByPerformer);
 
-router.get('/concerts/genre/:genre', ConcertsController.getGenre);
+router.get('/concerts/genre/:genre', ConcertsController.getConcertByGenre);
 
-router.get('/concerts/price/day/:day', ConcertsController.getDay);
+router.get('/concerts/price/day/:day', ConcertsController.getConcertByDay);
 
-router.get('/concerts/price/:price_min/:price_max', ConcertsController.getPrice);
+router.get('/concerts/price/:price_min/:price_max', ConcertsController.getConcertByPrice);
 
 router.post('/concerts', ConcertsController.post);
 

@@ -17,16 +17,16 @@ after(() => {
 describe('GET /api/concerts', () => {
 
   before(async () => {
-    const testOne = new Concert({_id: '44444140f10a81216cfd4444', performer: 'band4', genre: 'rock', price: 44, day: 1, image: 'photo4'});
+    const testOne = new Concert({_id: '44444140f10a81216cfd4444', performer: 'band4', genre: 'rock', price: 44, day: 1, image: '/img/uploads/350327.jpg'});
     await testOne.save();
 
-    const testTwo = new Concert({_id: '55555140f10a81216cfd5555', performer: 'band5', genre: 'rock', price: 55, day: 2, image: 'photo5'});
+    const testTwo = new Concert({_id: '55555140f10a81216cfd5555', performer: 'band5', genre: 'rock', price: 55, day: 2, image: '/img/uploads/811838.jpg'});
     await testTwo.save();
 
-    const testThree = new Concert({_id: '66666140f10a81216cfd6666', performer: 'band4', genre: 'pop', price: 66, day: 2, image: 'photo6'});
+    const testThree = new Concert({_id: '66666140f10a81216cfd6666', performer: 'band4', genre: 'pop', price: 66, day: 2, image: '/img/uploads/3018077.jpg'});
     await testThree.save();
 
-    const testFour = new Concert({_id: '77777140f10a81216cfd7777', performer: 'band3', genre: 'pop', price: 33, day: 3, image: 'photo6'});
+    const testFour = new Concert({_id: '77777140f10a81216cfd7777', performer: 'band3', genre: 'pop', price: 33, day: 3, image: '/img/uploads/167483.jpg'});
     await testFour.save();
   });
 
