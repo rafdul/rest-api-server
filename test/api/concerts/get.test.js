@@ -2,6 +2,7 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../../../server.js');
 const Concert = require('../../../models/concert.model');
+const Seat = require('../../../models/seat.model');
 const mongoose = require('mongoose');
 
 
@@ -28,6 +29,15 @@ describe('GET /api/concerts', () => {
 
     const testFour = new Concert({_id: '77777140f10a81216cfd7777', performer: 'band3', genre: 'pop', price: 33, day: 3, image: '/img/uploads/167483.jpg'});
     await testFour.save();
+
+    const ticketOne = new Seat({_id:'aa777140f10a81216cfd77aa', day: 1, seat: 1, client:'Jeff', email:'jeff@pl.pl'});
+    await ticketOne.save();
+
+    const ticketTwo = new Seat({_id:'bb777140f10a81216cfd77bb', day: 1, seat: 2, client:'Amanda', email:'amanda@pl.pl'});
+    await ticketTwo.save();
+
+    const ticketThree = new Seat({_id:'cc777140f10a81216cfd77cc', day: 2, seat: 3, client:'Ron', email:'ron@pl.pl'});
+    await ticketThree.save();
   });
 
   it('/ should return all concerts', async () => {
@@ -43,6 +53,16 @@ describe('GET /api/concerts', () => {
     const res = await request(server).get('/api/concerts/44444140f10a81216cfd4444');
     expect(res.status).to.be.equal(200);
     expect(res.body).to.be.an('object').to.have.deep.property('performer', 'band4');
+    expect(res.body).to.not.be.null;
+  });
+
+  it('/:id/tickets should return one concert by :id and free tickets', async () => {
+    const res = await request(server).get('/api/concerts/55555140f10a81216cfd5555/tickets');
+    // console.log('res.body.concert.day:', res.body.concert.day);
+    const tick = await Seat.find({day: res.body.concert.day})
+    const freeTickets = 50 - tick.length;
+    expect(res.status).to.be.equal(200);
+    expect(res.body).to.be.an('object').to.have.deep.property('freeTickets', freeTickets);
     expect(res.body).to.not.be.null;
   });
 
@@ -85,5 +105,6 @@ describe('GET /api/concerts', () => {
 
   after(async () => {
     await Concert.deleteMany();
+    await Seat.deleteMany();
   });  
 });

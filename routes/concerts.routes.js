@@ -6,6 +6,8 @@ router.get('/concerts', ConcertsController.getConcertAll);
 
 router.get('/concerts/:id', ConcertsController.getConcertById);
 
+router.get('/concerts/:id/tickets', ConcertsController.getTicketsOfConcerts);
+
 router.get('/concerts/performer/:performer', ConcertsController.getConcertByPerformer);
 
 router.get('/concerts/genre/:genre', ConcertsController.getConcertByGenre);
