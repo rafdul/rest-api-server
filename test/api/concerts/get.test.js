@@ -3,8 +3,8 @@ const chaiHttp = require('chai-http');
 const server = require('../../../server.js');
 const Concert = require('../../../models/concert.model');
 const Seat = require('../../../models/seat.model');
+const Workshop = require('../../../models/workshop.model');
 const mongoose = require('mongoose');
-
 
 chai.use(chaiHttp);
 
@@ -38,21 +38,33 @@ describe('GET /api/concerts', () => {
 
     const ticketThree = new Seat({_id:'cc777140f10a81216cfd77cc', day: 2, seat: 3, client:'Ron', email:'ron@pl.pl'});
     await ticketThree.save();
+
+    const workOne = new Workshop({name: 'Workshop1', concertId: testOne._id});
+    await workOne.save();
+
+    const workTwo = new Workshop({name: 'Workshop2', concertId: testTwo._id});
+    await workTwo.save();
+
+    const workThree = new Workshop({name: 'Workshop2', concertId: testThree._id});
+    await workThree.save();
   });
 
   it('/ should return all concerts', async () => {
     const res = await request(server).get('/api/concerts');
-    // console.log(res.body);
+    // console.log('res.body[0].concert.performer', res.body[0].concert.performer);
     const expectedLength = 4;
     expect(res.status).to.be.equal(200);
     expect(res.body).to.be.an('array');
+    expect(res.body[0].concert.performer).to.be.equal('band4');
     expect(res.body.length).to.be.equal(expectedLength);
   });
 
   it('/:id should return one concert by :id ', async () => {
     const res = await request(server).get('/api/concerts/44444140f10a81216cfd4444');
+    // console.log('res.body.workshops', res.body.workshops[0].name);
     expect(res.status).to.be.equal(200);
-    expect(res.body).to.be.an('object').to.have.deep.property('performer', 'band4');
+    expect(res.body).to.be.an('object').to.have.property('concert' && 'workshops' && 'freeTickets');
+    expect(res.body.workshops[0].name).to.be.equal('Workshop1');
     expect(res.body).to.not.be.null;
   });
 
@@ -62,16 +74,18 @@ describe('GET /api/concerts', () => {
     const tick = await Seat.find({day: res.body.concert.day})
     const freeTickets = 50 - tick.length;
     expect(res.status).to.be.equal(200);
-    expect(res.body).to.be.an('object').to.have.deep.property('freeTickets', freeTickets);
+    expect(res.body).to.be.an('object').to.have.property('concert' && 'workshops' && 'freeTickets');
     expect(res.body).to.not.be.null;
   });
 
   it('/performer/:performer should return one concert by :performer ', async () => {
     const res = await request(server).get('/api/concerts/performer/band4');
     expect(res.status).to.be.equal(200);
-    // console.log(res.body);
+    // console.log('res.body w perforemr', res.body);
     const expectedLength = 2
     expect(res.body).to.be.an('array').to.have.lengthOf(expectedLength);
+    expect(res.body[0].freeTickets).to.be.equal(48);
+    expect(res.body[0].workshops.length).to.be.equal(1);
     expect(res.body).to.not.be.null;
   });
 
@@ -87,9 +101,12 @@ describe('GET /api/concerts', () => {
   it('/price/day/:day should return one concert by :day ', async () => {
     const res = await request(server).get('/api/concerts/price/day/2');
     expect(res.status).to.be.equal(200);
-    // console.log(res.body);
+    // console.log('res.body w day', res.body);
     const expectedLength = 2;
     expect(res.body).to.be.an('array').to.have.lengthOf(expectedLength);
+    expect(res.body[0].freeTickets).to.be.equal(49);
+    expect(res.body[0].workshops.length).to.be.equal(1);
+    expect(res.body[0]).to.be.an('object').to.have.property('concert' && 'workshops' && 'freeTickets');
     expect(res.body).to.not.be.null;
   });
 
@@ -106,5 +123,6 @@ describe('GET /api/concerts', () => {
   after(async () => {
     await Concert.deleteMany();
     await Seat.deleteMany();
+    await Workshop.deleteMany();
   });  
 });
