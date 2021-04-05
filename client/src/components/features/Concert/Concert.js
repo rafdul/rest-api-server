@@ -20,7 +20,8 @@ class Concert extends React.Component {
   }
 
   render() {
-    const { performer, price, genre, day, image } = this.props;
+    const { performer, price, genre, day, image } = this.props.concert;
+    // console.log('propsy [0]concert', this.props.concert.performer)
 
     return(
       <article className="concert" >

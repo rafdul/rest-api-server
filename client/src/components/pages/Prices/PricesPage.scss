@@ -1,0 +1,11 @@
+@import '../../../styles/settings.scss';
+
+.concerts {
+  &__workshops{
+    .spanFirst:last-of-type {
+      span {
+        display: none;
+      }
+    }
+  }
+}

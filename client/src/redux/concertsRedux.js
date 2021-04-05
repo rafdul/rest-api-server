@@ -4,6 +4,7 @@ import { API_URL } from '../config';
 /* SELECTORS */
 export const getConcerts = ({ concerts }) => concerts.data;
 export const getRequest = ({ concerts }) => concerts.request;
+export const getAllConcerts = ({ concerts }) => concerts;
 
 /* ACTIONS */
 
