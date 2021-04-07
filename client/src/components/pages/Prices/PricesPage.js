@@ -13,7 +13,6 @@ class Prices extends React.Component {
   }
 
   parseNum(num) {
-    // let result = '';
     if(num === 1) return 'one';
     if(num === 2) return 'two';
     if(num === 3) return 'three';
