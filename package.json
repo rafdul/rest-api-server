@@ -20,5 +20,11 @@
     "build": "cd client && yarn install && yarn build",
     "test": "mocha --watch \"./{,!(node_modules|client)/**/}*.test.js\"",
     "test:watch": "onchange \"./**/*.js\" -i -k -- yarn test"
-  }
+  },
+  "name": "rest-api-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/rafdul/rest-api-server.git",
+  "author": "rafdul <rafalduluk@gmail.com>",
+  "license": "MIT"
 }
