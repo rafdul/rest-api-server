@@ -12,7 +12,7 @@
     "mongoose": "5.12.3",
     "nock": "^13.0.11",
     "nodemon": "^2.0.7",
-    "onchange": "6.1.0",
+    "onchange": "6.1.1",
     "snyk": "1.235.0",
     "socket.io": "^4.0.0",
     "tap": "^15.0.1",
