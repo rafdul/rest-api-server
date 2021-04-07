@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const routerTestimonial = require('./routes/testimonials.routes');
 const routerConcerts = require('./routes/concerts.routes');
 const routerSeats = require('./routes/seats.routes');
+const helmet = require('helmet');
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.urlencoded( {extended: false} ));
 app.use(express.json());
 app.use(cors());
 app.use(express.static(path.join(__dirname, '/client/build')));
+app.use(helmet());
 
 app.use((req, res, next) => {
   req.io = io;
@@ -30,7 +32,9 @@ app.use((req, res) => {
   res.status(404).json({ message: 'Not found...' });
 });
 
-mongoose.connect(`mongodb+srv://${process.env.userApp}:${process.env.mongoApp}@cluster0.wr8zn.mongodb.net/bookingDB?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true });
+// mongoose.connect(`mongodb+srv://${process.env.userApp}:${process.env.mongoApp}@cluster0.wr8zn.mongodb.net/bookingDB?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(`mongodb+srv://rafal:kodilla@cluster0.wr8zn.mongodb.net/bookingDB?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true });
+
 const db = mongoose.connection;
 
 // const dbURI = process.env.NODE_ENV === 'production' ? 'mongodb+srv://rafal:kodilla@cluster0.wr8zn.mongodb.net/bookingDB?retryWrites=true&w=majority' : 'url to local db';
