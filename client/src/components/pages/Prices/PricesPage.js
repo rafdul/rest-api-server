@@ -34,7 +34,7 @@ class Prices extends React.Component {
         </Alert>
 
         {concerts.map(item => (
-          <div key={item._id} className="concerts">
+          <div key={item.concert._id} className="concerts">
             <h2>Day {this.parseNum(item.concert.day)}</h2>
             <p>Price: {item.concert.price}$</p>
             <p className="concerts__workshops">Workshops:

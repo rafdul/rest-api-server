@@ -7,6 +7,7 @@ const routerTestimonial = require('./routes/testimonials.routes');
 const routerConcerts = require('./routes/concerts.routes');
 const routerSeats = require('./routes/seats.routes');
 const helmet = require('helmet');
+require('dotenv').config()
 
 const app = express();
 
@@ -35,10 +36,6 @@ app.use((req, res) => {
 mongoose.connect(`mongodb+srv://${process.env.userApp}:${process.env.mongoApp}@cluster0.wr8zn.mongodb.net/bookingDB?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;
-
-// const dbURI = process.env.NODE_ENV === 'production' ? 'mongodb+srv://rafal:kodilla@cluster0.wr8zn.mongodb.net/bookingDB?retryWrites=true&w=majority' : 'url to local db';
-// mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
-// const db = mongoose.connection;
 
 db.once('open', () => {
   console.log('Connected to the database');

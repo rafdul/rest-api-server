@@ -17,11 +17,14 @@ exports.getConcertAll = async (req, res) => {
   try {
     const concerts = await Concert.find();
     const workshops = await Workshop.find();
+    const tickets = await Seat.find();
     
     const allConcerts = [];
     for(let con of concerts){
       const result = workshops.filter(el => el.concertId == con._id);
-      const output = {concert: con, workshops: result};
+      const resultTickets = tickets.filter(el => el.day == con.day);
+      const freeTickets = 50 - resultTickets.length;
+      const output = {concert: con, freeTickets: freeTickets, workshops: result};
       allConcerts.push(output);
     }
     res.json(allConcerts);

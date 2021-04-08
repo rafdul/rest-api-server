@@ -4,7 +4,7 @@ import Concert from './../Concert/ConcertContainer';
 
 const Concerts = ({ concerts }) => (
   <section>
-    {concerts.map(con => <Concert key={con._id} {...con} />)}
+    {concerts.map(con => <Concert key={con.concert._id} {...con} />)}
   </section>
 )
 
