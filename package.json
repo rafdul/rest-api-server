@@ -5,7 +5,7 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "es6-promise": "^4.2.8",
-    "express": "4.17.1",
+    "express": "4.17.3",
     "helmet": "3.21.1",
     "mocha": "6.2.3",
     "mongo-sanitize": "1.0.1",
